@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 import Header from "@/components/Header";
 
-const Layout = async ({ children }: { children: ReactNode }) => {
+const HomeLayout = async ({ children }: { children: ReactNode }) => {
   return (
     <main className="root-container">
       <div className="mx-auto max-w-7xl">
@@ -14,4 +14,4 @@ const Layout = async ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default Layout;
+export default HomeLayout;

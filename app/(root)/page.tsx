@@ -2,7 +2,7 @@ import BookList from "@/components/BookList";
 import BookOverview from "@/components/BookOverview";
 import { Button } from "@/components/ui/button";
 
-const Home = () => {
+const HomePage = () => {
   <>
     <BookOverview />
 
@@ -10,4 +10,4 @@ const Home = () => {
   </>;
 };
 
-export default Home;
+export default HomePage;
