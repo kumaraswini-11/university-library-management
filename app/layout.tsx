@@ -37,3 +37,5 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
     </html>
   );
 };
+
+export default RootLayout;
