@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-// import { signOut } from "@/auth";
+import { signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
@@ -17,7 +17,7 @@ const Header = () => {
             action={async () => {
               "use server";
 
-              // await signOut();
+              await signOut();
             }}
             className="mb-10"
           >

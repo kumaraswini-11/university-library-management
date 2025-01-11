@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   DefaultValues,
   FieldValues,
@@ -9,10 +10,9 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { ZodType } from "zod";
-import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,9 +23,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
 import FileUpload from "@/components/FileUpload";
 import { toast } from "@/hooks/use-toast";
-import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
 
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;

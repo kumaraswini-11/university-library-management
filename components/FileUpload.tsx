@@ -1,13 +1,12 @@
 "use client";
 
-import { IKImage, ImageKitProvider, IKUpload, IKVideo } from "imagekitio-next";
-import ImageKit from "imagekit";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { IKImage, ImageKitProvider, IKUpload, IKVideo } from "imagekitio-next";
 
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
 import config from "@/lib/config";
+import { cn } from "@/lib/utils";
+import { toast } from "@/hooks/use-toast";
 
 const {
   env: {
@@ -28,6 +27,7 @@ const authenticator = async () => {
     }
 
     const data = await response.json();
+
     const { signature, expire, token } = data;
 
     return { token, expire, signature };
