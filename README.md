@@ -7,6 +7,7 @@
 ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-black?style=for-the-badge&logo=postgresql&logoColor=white&color=4169E1)
 ![Upstash](https://img.shields.io/badge/-Upstash-black?style=for-the-badge&logo=upstash&logoColor=white&color=00E9A3)
 ![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logo=tailwindcss&logoColor=white&color=06B6D4)
+![imagekit.io](https://img.shields.io/badge/-ImageKit.io-black?style=for-the-badge&logo=imagekit&logoColor=white&color=00B2A9)
 
 The **University Library Management System** is a production-grade platform featuring a public-facing app and an admin interface. It offers advanced functionalities like seamless book borrowing with reminders and receipts, robust user management, automated workflows, and a modern, optimized tech stack for real-world scalability.
 
