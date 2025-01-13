@@ -9,9 +9,11 @@ import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 
 const HomeLayout = async ({ children }: { children: ReactNode }) => {
+  // Authenticate the session & Redirect if the session is not available
   const session = await auth();
   if (!session) redirect("/sign-in");
 
+  // Run post-request logic using after
   after(async () => {
     if (!session?.user?.id) return;
 
@@ -21,9 +23,11 @@ const HomeLayout = async ({ children }: { children: ReactNode }) => {
       .where(eq(users.id, session?.user?.id))
       .limit(1);
 
+    // Get today's date in YYYY-MM-DD format. If lastActivityDate is already today's date, no update needed
     if (user[0].lastActivityDate === new Date().toISOString().slice(0, 10))
       return;
 
+    // Update the lastActivityDate to today's date
     await db
       .update(users)
       .set({ lastActivityDate: new Date().toISOString().slice(0, 10) })

@@ -16,18 +16,18 @@ const {
 
 const authenticator = async () => {
   try {
-    const response = await fetch(`${config.env.apiEndpoint}/api/auth/imagekit`);
+    const response = await fetch(
+      `${config.env.prodApiEndpoint}/api/auth/imagekit`
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
-
       throw new Error(
         `Request failed with status ${response.status}: ${errorText}`
       );
     }
 
     const data = await response.json();
-
     const { signature, expire, token } = data;
 
     return { token, expire, signature };
@@ -55,7 +55,7 @@ const FileUpload = ({
   onFileChange,
   value,
 }: Props) => {
-  const ikUploadRef = useRef(null);
+  const ikUploadRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<{ filePath: string | null }>({
     filePath: value ?? null,
   });
@@ -91,25 +91,22 @@ const FileUpload = ({
   };
 
   const onValidate = (file: File) => {
-    if (type === "image") {
-      if (file.size > 20 * 1024 * 1024) {
-        toast({
-          title: "File size too large",
-          description: "Please upload a file that is less than 20MB in size",
-          variant: "destructive",
-        });
+    if (type === "image" && file.size > 20 * 1024 * 1024) {
+      toast({
+        title: "File size too large",
+        description: "Please upload a file that is less than 20MB in size",
+        variant: "destructive",
+      });
+      return false;
+    }
 
-        return false;
-      }
-    } else if (type === "video") {
-      if (file.size > 50 * 1024 * 1024) {
-        toast({
-          title: "File size too large",
-          description: "Please upload a file that is less than 50MB in size",
-          variant: "destructive",
-        });
-        return false;
-      }
+    if (type === "video" && file.size > 50 * 1024 * 1024) {
+      toast({
+        title: "File size too large",
+        description: "Please upload a file that is less than 50MB in size",
+        variant: "destructive",
+      });
+      return false;
     }
 
     return true;
@@ -144,7 +141,6 @@ const FileUpload = ({
           e.preventDefault();
 
           if (ikUploadRef.current) {
-            // @ts-ignore
             ikUploadRef.current?.click();
           }
         }}

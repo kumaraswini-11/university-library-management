@@ -5,10 +5,10 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Session } from "next-auth";
 
-import { signOut } from "@/auth";
-import { Button } from "@/components/ui/button";
 import { cn, getInitials } from "@/lib/utils";
-import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+// import { signOut } from "@/auth";
+// import { Button } from "@/components/ui/button";
 
 const Header = ({ session }: { session: Session }) => {
   const pathName = usePathname();
@@ -46,7 +46,7 @@ const Header = ({ session }: { session: Session }) => {
         <li>
           <Link href="/my-profile">
             <Avatar>
-              <AvatarImage src="http://github.com/shadcn.png" />
+              {/* <AvatarImage src="http://github.com/shadcn.png" /> */}
               <AvatarFallback className="bg-amber-100">
                 {getInitials(session?.user?.name || "IN")}
               </AvatarFallback>

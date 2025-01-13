@@ -27,9 +27,9 @@ import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
 import FileUpload from "@/components/FileUpload";
 import { toast } from "@/hooks/use-toast";
 
-interface Props<T extends FieldValues> {
+interface AuthFormProps<T extends FieldValues> {
   schema: ZodType<T>;
-  defaultValues: T;
+  defaultValues: DefaultValues<T>;
   onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
   type: "SIGN_IN" | "SIGN_UP";
 }
@@ -39,32 +39,34 @@ const AuthForm = <T extends FieldValues>({
   schema,
   defaultValues,
   onSubmit,
-}: Props<T>) => {
+}: AuthFormProps<T>) => {
   const router = useRouter();
-
   const isSignIn = type === "SIGN_IN";
 
   const form: UseFormReturn<T> = useForm({
     resolver: zodResolver(schema),
-    defaultValues: defaultValues as DefaultValues<T>,
+    defaultValues,
   });
 
   const handleSubmit: SubmitHandler<T> = async (data) => {
-    const result = await onSubmit(data);
-
-    if (result.success) {
-      toast({
-        title: "Success",
-        description: isSignIn
-          ? "You have successfully signed in."
-          : "You have successfully signed up.",
-      });
-
-      router.push("/");
-    } else {
+    try {
+      const result = await onSubmit(data);
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: isSignIn
+            ? "You have successfully signed in."
+            : "You have successfully signed up.",
+        });
+        router.push("/");
+      } else {
+        throw new Error(result.error || "An error occurred.");
+      }
+    } catch (error) {
       toast({
         title: `Error ${isSignIn ? "signing in" : "signing up"}`,
-        description: result.error ?? "An error occurred.",
+        description:
+          error instanceof Error ? error.message : "Unexpected error",
         variant: "destructive",
       });
     }
@@ -77,8 +79,8 @@ const AuthForm = <T extends FieldValues>({
       </h1>
       <p className="text-light-100">
         {isSignIn
-          ? "Access the vast collection of resources, and stay updated"
-          : "Please complete all fields and upload a valid university ID to gain access to the library"}
+          ? "Access the vast collection of resources, and stay updated."
+          : "Please complete all fields and upload a valid university ID to gain access to the library."}
       </p>
       <Form {...form}>
         <form
@@ -130,7 +132,6 @@ const AuthForm = <T extends FieldValues>({
 
       <p className="text-center text-base font-medium">
         {isSignIn ? "New to BookWise? " : "Already have an account? "}
-
         <Link
           href={isSignIn ? "/sign-up" : "/sign-in"}
           className="font-bold text-primary"

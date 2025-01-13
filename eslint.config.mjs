@@ -22,6 +22,7 @@ const eslintConfig = [
   {
     rules: {
       "no-undef": "off",
+      "@typescript-eslint/no-explicit-any": "off", // Disable the rule
     },
   },
 ];
