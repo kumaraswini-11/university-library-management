@@ -9,8 +9,8 @@ import { signIn } from "@/auth";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import ratelimit from "@/lib/ratelimit";
-import { workflowClient } from "@/lib/workflow";
-import config from "@/lib/config";
+// import { workflowClient } from "@/lib/workflow";
+// import config from "@/lib/config";
 
 export const signInWithCredentials = async (
   params: Pick<AuthCredentials, "email" | "password">
@@ -73,13 +73,13 @@ export const signUp = async (params: AuthCredentials) => {
     });
 
     // Trigger workflow after successful sign-up
-    await workflowClient.trigger({
-      url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
-      body: {
-        email,
-        fullName,
-      },
-    });
+    // await workflowClient.trigger({
+    //   url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
+    //   body: {
+    //     email,
+    //     fullName,
+    //   },
+    // });
 
     // Automatically sign in the user after successful sign-up
     await signInWithCredentials({ email, password });
